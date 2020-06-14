@@ -1,0 +1,6 @@
+{
+  "itemsortermod.gui.title.configs": "Configs",
+  "itemsortermod.gui.button.config_gui.generic": "Generic",
+  "itemsortermod.message.command.help": "%s [%s] commands",
+  "itemsortermod.message.command.info": "Type /grab help for commands."
+}

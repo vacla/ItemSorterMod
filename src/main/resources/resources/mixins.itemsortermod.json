@@ -1,0 +1,14 @@
+{
+    "required": true,
+    "package": "eu.minemania.itemsortermod.mixin",
+    "minVersion": "0.7",
+    "client": [
+        "MixinClientPlayerEntity",
+        "MixinClientPlayNetworkHandler",
+        "MixinCommandSuggestor",
+        "MixinTextFieldWidget"
+    ],
+    "injectors": {
+    	"defaultRequire": 1
+    }
+}
