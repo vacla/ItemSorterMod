@@ -2,6 +2,7 @@ package eu.minemania.itemsortermod.gui;
 
 import eu.minemania.itemsortermod.Reference;
 import eu.minemania.itemsortermod.config.Configs;
+import eu.minemania.itemsortermod.config.Hotkeys;
 import eu.minemania.itemsortermod.data.DataManager;
 import fi.dy.masa.malilib.config.IConfigBase;
 import fi.dy.masa.malilib.gui.GuiConfigsBase;
@@ -30,6 +31,7 @@ public class GuiConfigs extends GuiConfigsBase
         int y = 26;
 
         x += this.createButton(x, y, -1, ConfigGuiTab.GENERIC);
+        x += this.createButton(x, y, -1, ConfigGuiTab.HOTKEYS);
     }
 
     private int createButton(int x, int y, int width, ConfigGuiTab tab)
@@ -55,6 +57,12 @@ public class GuiConfigs extends GuiConfigsBase
     }
 
     @Override
+    protected boolean useKeybindSearch()
+    {
+        return DataManager.getConfigGuiTab() == ConfigGuiTab.HOTKEYS;
+    }
+
+    @Override
     public List<ConfigOptionWrapper> getConfigs()
     {
         List<? extends IConfigBase> configs;
@@ -63,6 +71,10 @@ public class GuiConfigs extends GuiConfigsBase
         if(tab == ConfigGuiTab.GENERIC)
         {
             configs = Configs.Generic.OPTIONS;
+        }
+        else if(tab == ConfigGuiTab.HOTKEYS)
+        {
+            configs = Hotkeys.HOTKEY_LIST;
         }
         else
         {
@@ -102,7 +114,8 @@ public class GuiConfigs extends GuiConfigsBase
 
     public enum ConfigGuiTab
     {
-        GENERIC ("itemsortermod.gui.button.config_gui.generic");
+        GENERIC ("itemsortermod.gui.button.config_gui.generic"),
+        HOTKEYS ("itemsortermod.gui.button.config_gui.hotkeys");
 
         private final String translationKey;
 

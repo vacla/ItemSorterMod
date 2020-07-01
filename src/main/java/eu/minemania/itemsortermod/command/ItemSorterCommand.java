@@ -5,10 +5,9 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.CommandNode;
 import eu.minemania.itemsortermod.Reference;
-import eu.minemania.itemsortermod.config.BlockStateMapBuilder_v2;
 import eu.minemania.itemsortermod.data.DataManager;
+import fi.dy.masa.malilib.util.StringUtils;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.LiteralText;
@@ -57,7 +56,8 @@ public class ItemSorterCommand extends ItemSorterCommandBase
         }
         ItemStack heldItem = MinecraftClient.getInstance().player.getMainHandStack();
         DataManager.getChestSorter().getItems().clear();
-        DataManager.getChestSorter().getItems().addFirst(Item.getRawId(heldItem.getItem()));
+        DataManager.getChestSorter().getItems().addFirst(heldItem.getItem());
+        localOutput(context.getSource(), "Grabbing " + StringUtils.translate(heldItem.getTranslationKey()));
         return 1;
     }
 

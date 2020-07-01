@@ -23,8 +23,9 @@ public class DataManager
 {
     private static final DataManager INSTANCE = new DataManager();
     private static final ChestSorter chestSorter = new ChestSorter();
-    private static HashMap<String, String> presets;
+    private static HashMap<String, String> presets = new HashMap<>();
     private static boolean canSave;
+    public static int grabCooldown = 5;
 
     public static DataManager getInstance()
     {
@@ -167,7 +168,10 @@ public class DataManager
 
     public static void setPresets(List<String> list)
     {
-        presets.clear();
+        if(presets.size() != 0)
+        {
+            presets.clear();
+        }
         for(String listItem : list)
         {
             listItem = listItem.replaceAll(" ", "");

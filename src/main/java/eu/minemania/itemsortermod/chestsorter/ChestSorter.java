@@ -1,5 +1,6 @@
 package eu.minemania.itemsortermod.chestsorter;
 
+import eu.minemania.itemsortermod.ItemSorterMod;
 import eu.minemania.itemsortermod.data.DataManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -9,6 +10,7 @@ import net.minecraft.container.SlotActionType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 import java.util.LinkedList;
@@ -17,11 +19,11 @@ import java.util.List;
 public class ChestSorter 
 {
 	private Container container;
-	private LinkedList<Integer> items;
+	private LinkedList<Item> items;
 
 	public ChestSorter()
 	{
-		this.setItems(new LinkedList<Integer>());
+		this.setItems(new LinkedList<Item>());
 	}
 
 	/**
@@ -31,7 +33,10 @@ public class ChestSorter
 	public void grab(Container container)
 	{
 		if (this.getItems().size() < 1)
+		{
 			return;
+		}
+
 		this.container = container;
 		ClientPlayerEntity player = MinecraftClient.getInstance().player;
 		List<Slot> slots = this.container.slots;
@@ -39,11 +44,11 @@ public class ChestSorter
 		{
 			if (slots.get(i) != null && slots.get(i).getStack() != null)
 			{
-				int currID = Item.getRawId(slots.get(i).getStack().getItem());
+				Item currentItem = slots.get(i).getStack().getItem();
 				for (int j = 0; j < this.getItems().size(); j++)
 				{
-					int id = this.getItems().get(j);
-					if (currID == id)
+					Item item = this.getItems().get(j);
+					if (currentItem == item)
 					{
 						MinecraftClient.getInstance().interactionManager.clickSlot(container.syncId, i, 0, SlotActionType.QUICK_MOVE, player);
 						break;
@@ -63,26 +68,36 @@ public class ChestSorter
 	{
 		String[] parsedList = list.split(",");
 		StringBuilder result = new StringBuilder();
-		for (String item: parsedList)
+		for (String itemName: parsedList)
 		{
-			String[] parts = item.split(":");
-			if (parts[0].matches("[0-9]+") && Registry.ITEM.get(Integer.parseInt(parts[0])) != Items.AIR)
+			Item item = null;
+			try
 			{
-				this.items.addFirst(Integer.parseInt(parts[0]));
+				item = Registry.ITEM.get(new Identifier(itemName));
 			}
-			else if (Item.byRawId(Integer.parseInt(parts[0])) != null)
+			catch (Exception e)
 			{
-				this.items.addFirst(Item.getRawId(Item.byRawId(Integer.parseInt(parts[0]))));
+				ItemSorterMod.logger.warn("item not found: " + itemName);
+			}
+			if (item != Items.AIR)
+			{
+				this.items.addFirst(item);
+			}
+			else if (Item.getRawId(item) != 0)
+			{
+				this.items.addFirst(item);
 			}
 			else
 			{
-				DataManager.logError("No such item ID/name/preset as \"" + item + "\".");
+				DataManager.logError("No such name/preset as \"" + item + "\".");
 				return "";
 			}
-			result.append(" ").append((new ItemStack(Item.byRawId(this.items.get(0)))).getName().getString()).append(",");
+			result.append(" ").append((new ItemStack(this.items.get(0))).getName().getString()).append(",");
 		}
 		if (isPreset)
+		{
 			return result.substring(1, result.length() - 1);
+		}
 		DataManager.logMessage("Now grabbing items:" + result.substring(0, result.length() - 1) + ".");
 		return "";
 	}
@@ -149,10 +164,6 @@ public class ChestSorter
 				}
 				if (lookFor.getItem().equals(slots.get(j).getStack().getItem()))
 				{
-					if (lookFor != slots.get(j).getStack())
-					{
-						continue; // Additional check for metadata
-					}
 					MinecraftClient.getInstance().interactionManager.clickSlot(container.syncId,
 							i, 0, SlotActionType.QUICK_MOVE, MinecraftClient.getInstance().player);
 					break;
@@ -178,14 +189,14 @@ public class ChestSorter
 	/**
 	 * @return the items
 	 */
-	public LinkedList<Integer> getItems() {
+	public LinkedList<Item> getItems() {
 		return items;
 	}
 
 	/**
 	 * @param items the items to set
 	 */
-	public void setItems(LinkedList<Integer> items) {
+	public void setItems(LinkedList<Item> items) {
 		this.items = items;
 	}
 }

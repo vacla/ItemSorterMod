@@ -34,7 +34,7 @@
     ],
 
     "depends": {
-        "malilib": "*"
+        "malilib": ">=0.10.0-dev.21"
     },
 
     "custom": {
