@@ -8,12 +8,12 @@ import fi.dy.masa.malilib.hotkeys.IHotkeyCallback;
 import fi.dy.masa.malilib.hotkeys.IKeybind;
 import fi.dy.masa.malilib.hotkeys.KeyAction;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.container.AnvilContainer;
+import net.minecraft.screen.AnvilScreenHandler;
 
 public class KeyCallbacks
 {
     public static void init(MinecraftClient mc)
-    {	
+    {
         IHotkeyCallback callbackHotkeys = new KeyCallbackHotkeys(mc);
 
         Hotkeys.GRAB.getKeybind().setCallback(callbackHotkeys);
@@ -39,60 +39,60 @@ public class KeyCallbacks
         @Override
         public boolean onKeyAction(KeyAction action, IKeybind key)
         {
-            if(this.mc.player == null || this.mc.world == null)
+            if (this.mc.player == null || this.mc.world == null)
             {
                 return false;
             }
-            if(key == Hotkeys.OPEN_GUI_SETTINGS.getKeybind())
+            if (key == Hotkeys.OPEN_GUI_SETTINGS.getKeybind())
             {
                 GuiBase.openGui(new GuiConfigs());
                 return true;
             }
-            else if (mc.player.container != null && !mc.player.container.equals(mc.player.playerContainer) && !(mc.player.container instanceof AnvilContainer))
+            else if (mc.player.currentScreenHandler != null && !mc.player.currentScreenHandler.equals(mc.player.playerScreenHandler) && !(mc.player.currentScreenHandler instanceof AnvilScreenHandler))
             {
-                if(DataManager.grabCooldown < 5)
+                if (DataManager.grabCooldown < 5)
                 {
                     DataManager.grabCooldown++;
                 }
-                if(key == Hotkeys.GRAB.getKeybind() && DataManager.grabCooldown == 5)
+                if (key == Hotkeys.GRAB.getKeybind() && DataManager.grabCooldown == 5)
                 {
-                    DataManager.getChestSorter().grab(mc.player.container);
+                    DataManager.getChestSorter().grab(mc.player.currentScreenHandler);
                     DataManager.grabCooldown = 0;
                 }
-                else if(key == Hotkeys.DUMP_INV_ALL.getKeybind() && DataManager.grabCooldown == 5)
+                else if (key == Hotkeys.DUMP_INV_ALL.getKeybind() && DataManager.grabCooldown == 5)
                 {
-                    if(key == Hotkeys.DUMP_INV_INV.getKeybind())
+                    if (key == Hotkeys.DUMP_INV_INV.getKeybind())
                     {
-                        DataManager.getChestSorter().dumpInventory(mc.player.container, false, true);
+                        DataManager.getChestSorter().dumpInventory(mc.player.currentScreenHandler, false, true);
                     }
-                    else if(key == Hotkeys.DUMP_INV_HOT.getKeybind())
+                    else if (key == Hotkeys.DUMP_INV_HOT.getKeybind())
                     {
-                        DataManager.getChestSorter().dumpInventory(mc.player.container, true, false);
+                        DataManager.getChestSorter().dumpInventory(mc.player.currentScreenHandler, true, false);
                     }
                     else
                     {
-                        DataManager.getChestSorter().dumpInventory(mc.player.container, true, true);
+                        DataManager.getChestSorter().dumpInventory(mc.player.currentScreenHandler, true, true);
                     }
                     DataManager.grabCooldown = 0;
                 }
-                else if(key == Hotkeys.GRAB_INV.getKeybind() && DataManager.grabCooldown == 5)
+                else if (key == Hotkeys.GRAB_INV.getKeybind() && DataManager.grabCooldown == 5)
                 {
-                    DataManager.getChestSorter().grabInventory(mc.player.container);
+                    DataManager.getChestSorter().grabInventory(mc.player.currentScreenHandler);
                     DataManager.grabCooldown = 0;
                 }
-                else if(key == Hotkeys.MOVE_STACK_TO_CONT_ALL.getKeybind() && DataManager.grabCooldown == 5)
+                else if (key == Hotkeys.MOVE_STACK_TO_CONT_ALL.getKeybind() && DataManager.grabCooldown == 5)
                 {
-                    if(key == Hotkeys.MOVE_STACK_TO_CONT_INV.getKeybind())
+                    if (key == Hotkeys.MOVE_STACK_TO_CONT_INV.getKeybind())
                     {
-                        DataManager.getChestSorter().quickStackToContainer(mc.player.container,false, true);
+                        DataManager.getChestSorter().quickStackToContainer(mc.player.currentScreenHandler, false, true);
                     }
-                    else if(key == Hotkeys.MOVE_STACK_TO_CONT_HOT.getKeybind())
+                    else if (key == Hotkeys.MOVE_STACK_TO_CONT_HOT.getKeybind())
                     {
-                        DataManager.getChestSorter().quickStackToContainer(mc.player.container,true, false);
+                        DataManager.getChestSorter().quickStackToContainer(mc.player.currentScreenHandler, true, false);
                     }
                     else
                     {
-                        DataManager.getChestSorter().quickStackToContainer(mc.player.container, true, true);
+                        DataManager.getChestSorter().quickStackToContainer(mc.player.currentScreenHandler, true, true);
                     }
                     DataManager.grabCooldown = 0;
                 }

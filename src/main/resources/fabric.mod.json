@@ -1,43 +1,37 @@
 {
-    "schemaVersion": 1,
-    "id": "itemsortermod",
-    "name": "ItemSorterMod",
-    "version": "${mod_version}",
-
-    "description": "Updated ItemSorterMod.",
-    "authors": [
-        "Arnevdl29",
-        "Kyzderp"
+  "schemaVersion": 1,
+  "id": "itemsortermod",
+  "name": "ItemSorterMod",
+  "version": "${mod_version}",
+  "description": "Updated ItemSorterMod.",
+  "authors": [
+    "Arnevdl29",
+    "Kyzderp"
+  ],
+  "contact": {
+    "homepage": "",
+    "issues": "https://github.com/vacla/ItemSorterMod/issues",
+    "sources": "https://github.com/vacla/ItemSorterMod",
+    "twitter": "https://twitter.com/ArneLangenbergh",
+    "discord": "https://discord.gg/VTHVVgt"
+  },
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "main": [
+      "eu.minemania.itemsortermod.ItemSorterMod"
     ],
-    "contact": {
-        "homepage": "",
-        "issues": "https://github.com/vacla/ItemSorterMod/issues",
-        "sources": "https://github.com/vacla/ItemSorterMod",
-        "twitter": "https://twitter.com/ArneLangenbergh",
-        "discord": "https://discord.gg/VTHVVgt"
-    },
-
-    "license": "MIT",
-
-    "environment": "client",
-    "entrypoints": {
-        "main": [
-            "eu.minemania.itemsortermod.ItemSorterMod"
-        ],
-        "modmenu": [
-            "eu.minemania.itemsortermod.compat.modmenu.ModMenuImpl"
-        ]
-    },
-
-    "mixins": [
-        "mixins.itemsortermod.json"
-    ],
-
-    "depends": {
-        "malilib": ">=0.10.0-dev.21"
-    },
-
-    "custom": {
-        "modmenu:clientsideOnly": true
-    }
+    "modmenu": [
+      "eu.minemania.itemsortermod.compat.modmenu.ModMenuImpl"
+    ]
+  },
+  "mixins": [
+    "mixins.itemsortermod.json"
+  ],
+  "depends": {
+    "malilib": ">=0.10.0-dev.21"
+  },
+  "custom": {
+    "modmenu:clientsideOnly": true
+  }
 }

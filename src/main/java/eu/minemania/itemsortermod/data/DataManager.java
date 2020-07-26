@@ -35,30 +35,33 @@ public class DataManager
     /**
      * @return the chestSorter
      */
-    public static ChestSorter getChestSorter() {
+    public static ChestSorter getChestSorter()
+    {
         return chestSorter;
     }
 
     /**
      * Logs the message to the user
+     *
      * @param message The message to log
      */
     public static void logMessage(String message)
     {
         LiteralText displayMessage = new LiteralText(message);
         displayMessage.formatted(Formatting.GREEN);
-        MinecraftClient.getInstance().player.sendMessage(displayMessage);
+        MinecraftClient.getInstance().player.sendMessage(displayMessage, false);
     }
 
     /**
      * Logs the error message to the user
+     *
      * @param message The error message to log
      */
     public static void logError(String message)
     {
         LiteralText displayMessage = new LiteralText(message);
         displayMessage.formatted(Formatting.RED);
-        MinecraftClient.getInstance().player.sendMessage(displayMessage);
+        MinecraftClient.getInstance().player.sendMessage(displayMessage, false);
     }
 
     private static ConfigGuiTab configGuiTab = ConfigGuiTab.GENERIC;
@@ -79,7 +82,7 @@ public class DataManager
 
         JsonElement element = JsonUtils.parseJsonFile(file);
 
-        if(element != null && element.isJsonObject())
+        if (element != null && element.isJsonObject())
         {
 
             JsonObject root = element.getAsJsonObject();
@@ -90,7 +93,9 @@ public class DataManager
                 {
                     configGuiTab = ConfigGuiTab.valueOf(root.get("config_gui_tab").getAsString());
                 }
-                catch (Exception e) {}
+                catch (Exception e)
+                {
+                }
 
                 if (configGuiTab == null)
                 {
@@ -109,7 +114,7 @@ public class DataManager
 
     public static void save(boolean forceSave)
     {
-        if(!canSave && !forceSave)
+        if (!canSave && !forceSave)
         {
             return;
         }
@@ -128,7 +133,7 @@ public class DataManager
     {
         File dir = getCurrentConfigDirectory();
 
-        if(!dir.exists() && !dir.mkdirs())
+        if (!dir.exists() && !dir.mkdirs())
         {
             ItemSorterMod.logger.warn("Failed to create the config directory '{}'", dir.getAbsolutePath());
         }
@@ -141,9 +146,9 @@ public class DataManager
         MinecraftClient mc = MinecraftClient.getInstance();
         String name = StringUtils.getWorldOrServerName();
 
-        if(name != null)
+        if (name != null)
         {
-            if(globalData)
+            if (globalData)
             {
                 return Reference.MOD_ID + "_" + name + ".json";
             }
@@ -168,11 +173,11 @@ public class DataManager
 
     public static void setPresets(List<String> list)
     {
-        if(presets.size() != 0)
+        if (presets.size() != 0)
         {
             presets.clear();
         }
-        for(String listItem : list)
+        for (String listItem : list)
         {
             listItem = listItem.replaceAll(" ", "");
             String[] itemPart = listItem.split("=");

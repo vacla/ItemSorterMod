@@ -34,7 +34,7 @@ public class ItemSorterCommand extends ItemSorterCommandBase
 
     private static int info(CommandContext<ServerCommandSource> context)
     {
-        localOutput(context.getSource(), Reference.MOD_NAME + " ["+ Reference.MOD_VERSION+"]");
+        localOutput(context.getSource(), Reference.MOD_NAME + " [" + Reference.MOD_VERSION + "]");
         localOutputT(context.getSource(), "itemsortermod.message.command.info");
         presets(context);
         return 1;
@@ -49,7 +49,7 @@ public class ItemSorterCommand extends ItemSorterCommandBase
 
     private static int held(CommandContext<ServerCommandSource> context)
     {
-        if(MinecraftClient.getInstance().player.getMainHandStack() == null || MinecraftClient.getInstance().player.getMainHandStack().getItem() == null)
+        if (MinecraftClient.getInstance().player.getMainHandStack() == null || MinecraftClient.getInstance().player.getMainHandStack().getItem() == null)
         {
             localError(context.getSource(), "Stop trying to grab air");
             return 0;
@@ -64,7 +64,7 @@ public class ItemSorterCommand extends ItemSorterCommandBase
     private static int presets(CommandContext<ServerCommandSource> context)
     {
         StringBuilder result = new StringBuilder("Available presets:");
-        for(String preset : DataManager.getPresets().keySet())
+        for (String preset : DataManager.getPresets().keySet())
         {
             result.append(" ").append(preset).append(",");
         }
@@ -78,7 +78,7 @@ public class ItemSorterCommand extends ItemSorterCommandBase
         try
         {
             grabMessage = getString(context, "<item[,item2]>");
-            if(DataManager.getPresets().containsKey(grabMessage.toLowerCase()))
+            if (DataManager.getPresets().containsKey(grabMessage.toLowerCase()))
             {
                 DataManager.getChestSorter().getItems().clear();
                 String result = DataManager.getChestSorter().setItems(DataManager.getPresets().get(grabMessage), true);
@@ -102,18 +102,18 @@ public class ItemSorterCommand extends ItemSorterCommandBase
         localOutputT(context.getSource(), "itemsortermod.message.command.help", Reference.MOD_NAME, Reference.MOD_VERSION);
         int cmdCount = 0;
         CommandDispatcher<ServerCommandSource> dispatcher = Command.commandDispatcher;
-        for(CommandNode<ServerCommandSource> command : dispatcher.getRoot().getChildren())
+        for (CommandNode<ServerCommandSource> command : dispatcher.getRoot().getChildren())
         {
             String cmdName = command.getName();
-            if(ClientCommandManager.isClientSideCommand(cmdName))
+            if (ClientCommandManager.isClientSideCommand(cmdName))
             {
                 Map<CommandNode<ServerCommandSource>, String> usage = dispatcher.getSmartUsage(command, context.getSource());
-                for(String u : usage.values())
+                for (String u : usage.values())
                 {
                     ClientCommandManager.sendFeedback(new LiteralText("/" + cmdName + " " + u));
                 }
                 cmdCount += usage.size();
-                if(usage.size() == 0)
+                if (usage.size() == 0)
                 {
                     ClientCommandManager.sendFeedback(new LiteralText("/" + cmdName));
                     cmdCount++;
