@@ -3,16 +3,16 @@ package eu.minemania.itemsortermod;
 import fi.dy.masa.malilib.MaLiLibReference;
 import fi.dy.masa.malilib.event.InitializationHandler;
 import fi.dy.masa.malilib.util.StringUtils;
-import net.fabricmc.api.ModInitializer;
+import net.fabricmc.api.ClientModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ItemSorterMod implements ModInitializer
+public class ItemSorterMod implements ClientModInitializer
 {
     public static final Logger logger = LogManager.getLogger(Reference.MOD_ID);
 
     @Override
-    public void onInitialize()
+    public void onInitializeClient()
     {
         try
         {
