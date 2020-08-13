@@ -4,9 +4,12 @@ import fi.dy.masa.malilib.MaLiLibReference;
 import fi.dy.masa.malilib.event.InitializationHandler;
 import fi.dy.masa.malilib.util.StringUtils;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+@Environment(EnvType.CLIENT)
 public class ItemSorterMod implements ClientModInitializer
 {
     public static final Logger logger = LogManager.getLogger(Reference.MOD_ID);
